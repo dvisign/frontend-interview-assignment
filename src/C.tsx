@@ -10,7 +10,6 @@ const C = () => {
 
   useEffect(() => {
     if (!file) return;
-
     (async () => {
       setFileImage((await getImageByFile(file)) ?? "");
     })();

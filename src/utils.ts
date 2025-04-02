@@ -4,7 +4,7 @@ import workerSrc from "pdfjs-dist/build/pdf.worker?url";
 pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
 
 export const pdfFileToImage = async (
-  file: File
+  file: File,
 ): Promise<{
   image: string;
   error: string | null;
@@ -37,7 +37,7 @@ export const pdfFileToImage = async (
 };
 
 export const getImageByFile = async (
-  file: File
+  file: File,
 ): Promise<string | undefined> => {
   const result = await pdfFileToImage(file);
 

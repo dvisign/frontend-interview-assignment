@@ -8,14 +8,14 @@ apis.interceptors.request.use(
   (config) => {
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 apis.interceptors.response.use(
   (res) => res,
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 export default apis;

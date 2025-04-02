@@ -1,14 +1,14 @@
-import A from "./A";
+import PdfStamper from "@/pages/Main/components/PdfStamper";
 import B from "./B";
 import C from "./C";
 
-import "./App.css";
+import "@/assets/css/App.css";
 
 function App() {
   return (
     <div id="app">
       <div>
-        <A />
+        <PdfStamper />
         <B />
         <C />
       </div>

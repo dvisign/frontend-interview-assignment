@@ -7,9 +7,7 @@ import { getImageByFile } from "./utils";
 import "./B.css";
 
 const FABRIC_CANVAS_WIDTH = 500;
-const FABRIC_CANVAS_HEIGHT = parseFloat(
-  (FABRIC_CANVAS_WIDTH * Math.sqrt(2)).toFixed(2),
-);
+const FABRIC_CANVAS_HEIGHT = parseFloat((FABRIC_CANVAS_WIDTH * Math.sqrt(2)).toFixed(2));
 
 const B = () => {
   const { file } = useStore();

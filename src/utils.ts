@@ -36,9 +36,7 @@ export const pdfFileToImage = async (
   };
 };
 
-export const getImageByFile = async (
-  file: File,
-): Promise<string | undefined> => {
+export const getImageByFile = async (file: File): Promise<string | undefined> => {
   const result = await pdfFileToImage(file);
 
   return result.image;

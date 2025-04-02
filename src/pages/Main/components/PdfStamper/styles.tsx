@@ -28,5 +28,13 @@ export const PdfStamperStyles = styled("div")({
     ".pdfUpload": {
       minHeight: "48px",
     },
+    ".pdfFile": {
+      minHeight: "48px",
+    },
+  },
+  ".bottom": {
+    display: "flex",
+    justifyContent: "flex-end",
+    gap: "12px",
   },
 });

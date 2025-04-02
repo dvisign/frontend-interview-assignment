@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useStore } from "@/store";
+import Button from "@/components/form/Button";
 import { PdfStamperStyles } from "./styles";
 
 import Stamp1 from "../../../../files/stamp-1.jpg";
@@ -37,29 +38,27 @@ const PdfStamper = () => {
       <div className="top">
         <div>
           <div className="pdfUpload">
-            <input
-              ref={pdfInputRef}
-              type="file"
-              onChange={handlePDFChange}
-              style={{ display: "none" }}
-            />
-
-            <button type="button" onClick={handlePDFUpload}>
+            <input ref={pdfInputRef} type="file" onChange={handlePDFChange} style={{ display: "none" }} />
+            <Button type="button" onClick={handlePDFUpload}>
               PDF 업로드
-            </button>
+            </Button>
           </div>
-
           <div className="pdfFile">
             {!!file?.name && (
               <>
                 📄 파일명: <strong>{file?.name}</strong>
-                <button
+                <Button
                   type="button"
-                  className="pdfFileRemove"
                   onClick={handlePDFRemove}
-                >
+                  varint="PRIMARY"
+                  size="SM"
+                  style={{
+                    backgroundColor: "transparent",
+                    color: "#5e5e5e",
+                    fontSize: "16px",
+                  }}>
                   X
-                </button>
+                </Button>
               </>
             )}
           </div>
@@ -67,16 +66,10 @@ const PdfStamper = () => {
 
         <div>
           <div className="stampUpload">
-            <input
-              ref={stampInputRef}
-              type="file"
-              accept=".png"
-              onChange={() => {}}
-              style={{ display: "none" }}
-            />
-            <button type="button" onClick={handleStampUpload}>
+            <input ref={stampInputRef} type="file" accept=".png" onChange={() => {}} style={{ display: "none" }} />
+            <Button type="button" onClick={handleStampUpload}>
               도장 업로드
-            </button>
+            </Button>
           </div>
 
           <div className="stamps">
@@ -86,9 +79,9 @@ const PdfStamper = () => {
       </div>
 
       <div className="bottom">
-        <button type="button" onClick={handleStampDraw}>
-          도장 찍기
-        </button>
+        <Button type="button" onClick={handleStampDraw}>
+          도장 업로드
+        </Button>
       </div>
     </PdfStamperStyles>
   );

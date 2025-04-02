@@ -37,12 +37,7 @@ const A = () => {
       <div className="top">
         <div>
           <div className="pdfUpload">
-            <input
-              ref={pdfInputRef}
-              type="file"
-              onChange={handlePDFChange}
-              style={{ display: "none" }}
-            />
+            <input ref={pdfInputRef} type="file" onChange={handlePDFChange} style={{ display: "none" }} />
 
             <button type="button" onClick={handlePDFUpload}>
               PDF 업로드
@@ -53,11 +48,7 @@ const A = () => {
             {!!file?.name && (
               <>
                 📄 파일명: <strong>{file?.name}</strong>
-                <button
-                  type="button"
-                  className="pdfFileRemove"
-                  onClick={handlePDFRemove}
-                >
+                <button type="button" className="pdfFileRemove" onClick={handlePDFRemove}>
                   X
                 </button>
               </>
@@ -67,13 +58,7 @@ const A = () => {
 
         <div>
           <div className="stampUpload">
-            <input
-              ref={stampInputRef}
-              type="file"
-              accept=".png"
-              onChange={() => {}}
-              style={{ display: "none" }}
-            />
+            <input ref={stampInputRef} type="file" accept=".png" onChange={() => {}} style={{ display: "none" }} />
             <button type="button" onClick={handleStampUpload}>
               도장 업로드
             </button>

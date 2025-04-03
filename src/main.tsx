@@ -1,5 +1,8 @@
 import { createRoot } from "react-dom/client";
+import App from "@/App";
+import { initMsw } from "@/mock";
 import "@/assets/css/main.css";
-import App from "./App.tsx";
 
-createRoot(document.getElementById("root")!).render(<App />);
+initMsw().then(() => {
+  createRoot(document.getElementById("root")!).render(<App />);
+});

@@ -13,6 +13,6 @@ export interface ButtonTypes extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 // 버튼 스타일드 컴포넌트 props type
 export interface ButtonStylesProps {
-  varint?: BUTTON_VARINT_TYPE;
-  size?: BUTTON_SIZE_TYPE;
+  varint: BUTTON_VARINT_TYPE;
+  size: BUTTON_SIZE_TYPE;
 }

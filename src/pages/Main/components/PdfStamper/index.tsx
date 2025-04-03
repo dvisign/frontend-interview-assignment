@@ -1,6 +1,7 @@
-import { useRef } from "react";
+import { useCallback } from "react";
 import { useStore } from "@/store";
 import Button from "@/components/form/Button";
+import useRefCallback from "@/hooks/useRefCallback";
 import { PdfStamperStyles } from "./styles";
 
 import Stamp1 from "../../../../files/stamp-1.jpg";
@@ -8,28 +9,27 @@ import Stamp1 from "../../../../files/stamp-1.jpg";
 const PdfStamper = () => {
   const { file, setFile } = useStore();
 
-  const stampInputRef = useRef<HTMLInputElement>(null);
-  const pdfInputRef = useRef<HTMLInputElement>(null);
+  const [stampInputRef, stampRefCreator] = useRefCallback<HTMLInputElement>();
+  const [pdfInputRef, pdfRefCreator] = useRefCallback<HTMLInputElement>();
 
-  const handlePDFChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePDFChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
-    setFile(file!);
-
+    if (!file) return;
+    setFile(file);
     e.target.value = "";
-  };
+  }, []);
 
-  const handleStampUpload = () => {
+  const handleStampUpload = useCallback(() => {
     stampInputRef.current?.click();
-  };
+  }, []);
 
-  const handlePDFUpload = () => {
+  const handlePDFUpload = useCallback(() => {
     pdfInputRef.current?.click();
-  };
+  }, []);
 
-  const handlePDFRemove = () => {
+  const handlePDFRemove = useCallback(() => {
     setFile(null);
-  };
+  }, []);
 
   const handleStampDraw = async () => {};
 
@@ -38,7 +38,7 @@ const PdfStamper = () => {
       <div className="top">
         <div>
           <div className="pdfUpload">
-            <input ref={pdfInputRef} type="file" onChange={handlePDFChange} style={{ display: "none" }} />
+            <input ref={pdfRefCreator} type="file" onChange={handlePDFChange} style={{ display: "none" }} />
             <Button type="button" onClick={handlePDFUpload}>
               PDF 업로드
             </Button>
@@ -66,7 +66,7 @@ const PdfStamper = () => {
 
         <div>
           <div className="stampUpload">
-            <input ref={stampInputRef} type="file" accept=".png" onChange={() => {}} style={{ display: "none" }} />
+            <input ref={stampRefCreator} type="file" accept=".png" onChange={() => {}} style={{ display: "none" }} />
             <Button type="button" onClick={handleStampUpload}>
               도장 업로드
             </Button>

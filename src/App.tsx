@@ -1,6 +1,6 @@
 import PdfStamper from "@/pages/Main/components/PdfStamper";
-import PDFCanvas from "./pages/Main/components/PDFCanvas";
-import C from "./C";
+import PdfCanvas from "./pages/Main/components/PdfCanvas";
+import PdfPreview from "./pages/Main/components/PdfPreview";
 
 import "@/assets/css/App.css";
 
@@ -9,8 +9,8 @@ function App() {
     <div id="app">
       <div>
         <PdfStamper />
-        <PDFCanvas />
-        <C />
+        <PdfCanvas />
+        <PdfPreview />
       </div>
     </div>
   );

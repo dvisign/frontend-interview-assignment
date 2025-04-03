@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useStore } from "@/store";
+import { getImageByFile } from "@/utils";
+import { PdfPreviewStyles } from "./styles";
 
-import "./C.css";
-import { getImageByFile } from "./utils";
-
-const C = () => {
+const PdfPreview = () => {
   const { file } = useStore();
   const [fileImage, setFileImage] = useState<string | null>(null);
 
@@ -16,7 +15,7 @@ const C = () => {
   }, [file]);
 
   return (
-    <div className="C">
+    <PdfPreviewStyles className="C">
       <div className="top">
         {fileImage && (
           <div>
@@ -27,8 +26,8 @@ const C = () => {
           </div>
         )}
       </div>
-    </div>
+    </PdfPreviewStyles>
   );
 };
 
-export default C;
+export default PdfPreview;

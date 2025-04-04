@@ -22,7 +22,7 @@ export const PdfStamperStyles = styled("div")(() => {
         display: "flex",
         gap: "8px",
         minHeight: "54px",
-
+        flexWrap: "wrap",
         "& img": {
           cursor: "pointer",
           width: "48px",

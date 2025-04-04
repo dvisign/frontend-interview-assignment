@@ -1,9 +1,10 @@
 import apis from "@/modules/apis";
 import { ApiResponseType } from "@/types/apis";
 import { StampType } from "@/types/stamp";
+import { PdfResponseType } from "./types";
 import { parseAxiosError } from "../error";
 
-export const getPdf = async (): Promise<ApiResponseType<StampType[]>> => {
+export const getPdf = async (): Promise<ApiResponseType<PdfResponseType>> => {
   try {
     const response = await apis({
       url: "/api/pdf",
@@ -11,7 +12,7 @@ export const getPdf = async (): Promise<ApiResponseType<StampType[]>> => {
     });
     return {
       success: true,
-      data: response?.data ?? [],
+      data: response?.data ?? {},
     };
   } catch (error) {
     return {

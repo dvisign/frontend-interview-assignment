@@ -17,7 +17,11 @@ const PDFCanvas = () => {
   const handlePDFDownload = async () => {};
 
   useEffect(() => {
-    if (!file || !canvasRef.current) return;
+    if (!canvasRef.current) return;
+    fabricCanvasRef.current?.dispose();
+    fabricCanvasRef.current = null;
+    // 파일이 없을 경우 캔버스 dispose 및 초기화
+    if (!file) return;
 
     fabricCanvasRef.current = new fabric.Canvas(canvasRef.current, {
       width: FABRIC_CANVAS_WIDTH,

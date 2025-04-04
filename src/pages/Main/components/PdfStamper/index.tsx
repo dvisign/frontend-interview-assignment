@@ -3,8 +3,9 @@ import { usePdfStore } from "@/stores/pdfStore";
 import Button from "@/components/form/Button";
 import FileUploader from "@/components/form/FileUploader";
 import { getStamp, uploadStamp } from "@/services/stamp";
-import { PdfStamperStyles } from "./styles";
+import { getPdf } from "@/services/pdf";
 import { StampType } from "@/types/stamp";
+import { PdfStamperStyles } from "./styles";
 
 const PdfStamper = () => {
   const { file, setFile } = usePdfStore();
@@ -21,23 +22,29 @@ const PdfStamper = () => {
     setFile(null);
   }, []);
 
-  const handleStampChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("name", file.name);
+  const handleStampChange = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file || stampList.length >= 5)
+        return alert("도장 업로드 갯수를 초과하였습니다. 최대 5개까지 등록 가능합니다.");
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("name", file.name);
 
-    await uploadStamp(formData);
-    const getStamper = await getStamp();
-    if (getStamper.success) setStampList(getStamper.data);
-    e.target.value = "";
-  }, []);
+      await uploadStamp(formData);
+      const getStamper = await getStamp();
+      if (getStamper.success) setStampList(getStamper.data);
+      e.target.value = "";
+    },
+    [stampList],
+  );
 
   const handleStampDraw = async () => {};
 
   useEffect(() => {
     (async () => {
+      const getPdfFiles = await getPdf();
+      if (getPdfFiles.success) setFile(getPdfFiles.data?.file);
       const getStamper = await getStamp();
       if (getStamper.success) setStampList(getStamper.data);
     })();

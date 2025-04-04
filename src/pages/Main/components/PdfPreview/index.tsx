@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useStore } from "@/store";
+import { usePdfStore } from "@/stores/pdfStore";
 import { getImageByFile } from "@/utils";
 import { PdfPreviewStyles } from "./styles";
 
 const PdfPreview = () => {
-  const { file } = useStore();
+  const { file } = usePdfStore();
   const [fileImage, setFileImage] = useState<string | null>(null);
 
   useEffect(() => {

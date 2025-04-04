@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useStore } from "@/store";
+import { usePdfStore } from "@/stores/pdfStore";
 import * as fabric from "fabric";
 import Button from "@/components/form/Button";
 import useRefCallback from "@/hooks/useRefCallback";
@@ -10,7 +10,7 @@ const FABRIC_CANVAS_WIDTH = 500;
 const FABRIC_CANVAS_HEIGHT = parseFloat((FABRIC_CANVAS_WIDTH * Math.sqrt(2)).toFixed(2));
 
 const PDFCanvas = () => {
-  const { file } = useStore();
+  const { file } = usePdfStore();
   const [canvasRef, canvasRefCreator] = useRefCallback<HTMLCanvasElement>();
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
 

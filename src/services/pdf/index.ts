@@ -3,10 +3,10 @@ import { ApiResponseType } from "@/types/apis";
 import { StampType } from "@/types/stamp";
 import { parseAxiosError } from "../error";
 
-export const getStamp = async (): Promise<ApiResponseType<StampType[]>> => {
+export const getPdf = async (): Promise<ApiResponseType<StampType[]>> => {
   try {
     const response = await apis({
-      url: "/api/stamps",
+      url: "/api/pdf",
       method: "GET",
     });
     return {
@@ -21,10 +21,10 @@ export const getStamp = async (): Promise<ApiResponseType<StampType[]>> => {
   }
 };
 
-export const uploadStamp = async (formData: FormData): Promise<ApiResponseType<StampType>> => {
+export const uploadPdf = async (formData: FormData): Promise<ApiResponseType<StampType>> => {
   try {
     const response = await apis({
-      url: "/api/stamps",
+      url: "/api/pdf",
       method: "POST",
       data: formData,
       headers: {

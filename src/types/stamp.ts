@@ -1,4 +1,4 @@
-export type STAMP_LIST_TYPE = {
+export type StampType = {
   name: string;
   base64: string;
 };

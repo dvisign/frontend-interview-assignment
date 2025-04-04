@@ -4,13 +4,13 @@ import Button from "@/components/form/Button";
 import FileUploader from "@/components/form/FileUploader";
 import { getStamp, uploadStamp } from "@/services/stamp";
 import { PdfStamperStyles } from "./styles";
-import { STAMP_LIST_TYPE } from "./types";
+import { StampType } from "@/types/stamp";
 
 const PdfStamper = () => {
   const { file, setFile } = usePdfStore();
-  const [stampList, setStampList] = useState<STAMP_LIST_TYPE[]>([]);
+  const [stampList, setStampList] = useState<StampType[]>([]);
 
-  const handlePDFChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePDFChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setFile(file);

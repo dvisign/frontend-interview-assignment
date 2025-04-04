@@ -1,13 +1,14 @@
-import { useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useStore } from "@/store";
 import Button from "@/components/form/Button";
 import FileUploader from "@/components/form/FileUploader";
+import { getStamp, uploadStamp } from "@/services/stamp";
 import { PdfStamperStyles } from "./styles";
-
-import Stamp1 from "../../../../files/stamp-1.jpg";
+import { STAMP_LIST_TYPE } from "./types";
 
 const PdfStamper = () => {
   const { file, setFile } = useStore();
+  const [stampList, setStampList] = useState<STAMP_LIST_TYPE[]>([]);
 
   const handlePDFChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -20,7 +21,26 @@ const PdfStamper = () => {
     setFile(null);
   }, []);
 
+  const handleStampChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("name", file.name);
+
+    const saveStamp = await uploadStamp(formData);
+    console.log("saveStamp", saveStamp);
+    e.target.value = "";
+  }, []);
+
   const handleStampDraw = async () => {};
+
+  useEffect(() => {
+    (async () => {
+      const getStamper = await getStamp();
+      if (getStamper.success) setStampList(getStamper.data);
+    })();
+  }, []);
 
   return (
     <PdfStamperStyles className="A">
@@ -52,11 +72,16 @@ const PdfStamper = () => {
 
         <div>
           <div className="stampUpload">
-            <FileUploader accept=".png">도장 업로드</FileUploader>
+            <FileUploader accept=".png" onChange={handleStampChange}>
+              도장 업로드
+            </FileUploader>
           </div>
 
           <div className="stamps">
-            <img src={Stamp1} />
+            {/* <img src={Stamp1} /> */}
+            {stampList.map((v, i) => {
+              return <img key={i} src={v.base64} alt={v.name} />;
+            })}
           </div>
         </div>
       </div>

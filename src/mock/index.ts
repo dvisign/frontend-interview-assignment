@@ -7,3 +7,8 @@ export async function initMsw() {
   }
   return Promise.resolve();
 }
+
+export function apiEndpoints(url: string) {
+  const baseUrl = import.meta.env.VITE_PUBLIC_API_URL;
+  return `${baseUrl}${url}`;
+}

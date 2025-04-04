@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apis = axios.create({
-  baseURL: "",
+  baseURL: import.meta.env.VITE_PUBLIC_API_URL,
 });
 
 apis.interceptors.request.use(

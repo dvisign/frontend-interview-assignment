@@ -1,7 +1,8 @@
 import { http, HttpResponse } from "msw";
+import { apiEndpoints } from "@/mock";
 
 export default [
-  http.get("/api/pdf", async () => {
+  http.get(apiEndpoints("/api/pdf"), async () => {
     return HttpResponse.json(
       {
         data: {},

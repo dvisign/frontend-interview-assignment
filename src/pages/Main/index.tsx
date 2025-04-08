@@ -12,7 +12,8 @@ const FABRIC_CANVAS_HEIGHT = parseFloat((FABRIC_CANVAS_WIDTH * Math.sqrt(2)).toF
 const Main = () => {
   const { file } = usePdfStore();
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
-  const [selectPage, setSelectPage] = useState(0);
+  const [selectPage, setSelectPage] = useState<number>(0);
+  const [stempedPage, setStempedPage] = useState<number[]>([]);
   const createCanvas = useCallback(
     (el: HTMLCanvasElement) => {
       if (!el) return;
@@ -48,9 +49,14 @@ const Main = () => {
   );
   return (
     <div>
-      <PdfStamper fabricCanvasRef={fabricCanvasRef} />
-      <PdfCanvas selectPage={selectPage} createCanvas={createCanvas} />
-      <PdfPreview setSelectPage={setSelectPage} />
+      <PdfStamper setStempedPage={setStempedPage} fabricCanvasRef={fabricCanvasRef} />
+      <PdfCanvas
+        stempedPage={stempedPage}
+        fabricCanvasRef={fabricCanvasRef}
+        selectPage={selectPage}
+        createCanvas={createCanvas}
+      />
+      <PdfPreview selectPage={selectPage} setSelectPage={setSelectPage} />
     </div>
   );
 };

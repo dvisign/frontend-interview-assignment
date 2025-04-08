@@ -5,7 +5,7 @@ import { loadPdfFromFile, renderAllPagesToImages } from "@/utils";
 import { PdfPreviewStyles } from "./styles";
 import { PdfPreviewPropTypes } from "./types";
 
-const PdfPreview = ({ setSelectPage }: PdfPreviewPropTypes) => {
+const PdfPreview = ({ selectPage = 0, setSelectPage }: PdfPreviewPropTypes) => {
   const { file } = usePdfStore();
   const [fileImage, setFileImage] = useState<string[] | null>(null);
 
@@ -31,7 +31,7 @@ const PdfPreview = ({ setSelectPage }: PdfPreviewPropTypes) => {
         {fileImage &&
           fileImage.map((v, i) => {
             return (
-              <div key={i}>
+              <div key={i} className={`previewItmes ${i === selectPage ? "active" : ""}`}>
                 <Button className="image" onClick={() => onChangeDocument(i)}>
                   <img src={v} />
                 </Button>

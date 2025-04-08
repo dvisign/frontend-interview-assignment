@@ -9,7 +9,7 @@ import { base64ToFile } from "@/utils";
 import { PdfStamperStyles } from "./styles";
 import { PdfStamperPropTypes } from "./types";
 
-const PdfStamper = ({ fabricCanvasRef }: PdfStamperPropTypes) => {
+const PdfStamper = ({ setStempedPage = () => null, fabricCanvasRef = { current: null } }: PdfStamperPropTypes) => {
   const { file, setFile, stampList, setStampList, selectStamp, setSelectStamp } = usePdfStore();
 
   const handlePDFChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +65,10 @@ const PdfStamper = ({ fabricCanvasRef }: PdfStamperPropTypes) => {
     });
     fabricCanvasRef.current.add(addStamper);
     fabricCanvasRef.current.requestRenderAll();
-  }, [stampList, selectStamp]);
+    setStempedPage(prev => {
+      return [...prev, selectStamp];
+    });
+  }, [stampList, selectStamp, setStempedPage]);
 
   useEffect(() => {
     (async () => {

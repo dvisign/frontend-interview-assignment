@@ -23,11 +23,16 @@ export const PdfStamperStyles = styled("div")(() => {
         gap: "8px",
         minHeight: "54px",
         flexWrap: "wrap",
-        "& img": {
-          cursor: "pointer",
-          width: "48px",
-          height: "48px",
-          borderRadius: "4px",
+        "& .stampItems": {
+          "&.active": {
+            border: "1px solid blue",
+          },
+          "& img": {
+            cursor: "pointer",
+            width: "48px",
+            height: "48px",
+            borderRadius: "4px",
+          },
         },
       },
       "& .pdfUpload": {

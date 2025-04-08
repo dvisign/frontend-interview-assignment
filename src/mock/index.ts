@@ -1,7 +1,9 @@
 export const STAMP_KEY = "stamp";
+export const PDF_KEY = "pdf";
 export const STORAGE_KEY = "mockStorage";
 export const getStorageData = () => localStorage.getItem(STORAGE_KEY) ?? "{}";
 export const getStampData = () => JSON.parse(getStorageData())?.[STAMP_KEY] ?? [];
+export const getPdfData = () => JSON.parse(getStorageData())?.[PDF_KEY] ?? {};
 
 export async function initMsw() {
   if (import.meta.env.MODE !== "production" && typeof window !== "undefined") {

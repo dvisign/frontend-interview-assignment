@@ -1,3 +1,4 @@
 export type PdfResponseType = {
-  file: File | null;
+  name: string;
+  base64: string;
 };

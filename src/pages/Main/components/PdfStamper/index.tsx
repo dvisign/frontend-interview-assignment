@@ -1,24 +1,29 @@
-import { useState, useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
+import * as fabric from "fabric";
 import { usePdfStore } from "@/stores/pdfStore";
 import Button from "@/components/form/Button";
 import FileUploader from "@/components/form/FileUploader";
 import { getStamp, uploadStamp } from "@/services/stamp";
-import { getPdf } from "@/services/pdf";
-import { StampType } from "@/types/stamp";
+import { getPdf, uploadPdf, deletePdf } from "@/services/pdf";
+import { base64ToFile } from "@/utils";
 import { PdfStamperStyles } from "./styles";
+import { PdfStamperPropTypes } from "./types";
 
-const PdfStamper = () => {
-  const { file, setFile } = usePdfStore();
-  const [stampList, setStampList] = useState<StampType[]>([]);
+const PdfStamper = ({ fabricCanvasRef }: PdfStamperPropTypes) => {
+  const { file, setFile, stampList, setStampList, selectStamp, setSelectStamp } = usePdfStore();
 
   const handlePDFChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setFile(file);
+    const formData = new FormData();
+    formData.append("file", file);
+    const upload = await uploadPdf(formData);
+    if (upload.success) setFile(base64ToFile(upload.data?.base64, upload.data?.name));
     e.target.value = "";
   }, []);
 
-  const handlePDFRemove = useCallback(() => {
+  const handlePDFRemove = useCallback(async () => {
+    await deletePdf();
     setFile(null);
   }, []);
 
@@ -39,12 +44,35 @@ const PdfStamper = () => {
     [stampList],
   );
 
-  const handleStampDraw = async () => {};
+  const onSelectStamp = useCallback(
+    (index: number) => {
+      setSelectStamp(index);
+    },
+    [stampList],
+  );
+
+  const handleStampDraw = useCallback(async () => {
+    if (selectStamp === null || !fabricCanvasRef.current) return;
+    const stamper = stampList[selectStamp].base64;
+    const addStamper = await fabric.FabricImage.fromURL(stamper);
+    const fixedWidth = 100;
+    const scale = fixedWidth / addStamper.width!;
+    addStamper.set({
+      left: 0,
+      top: 0,
+      scaleX: scale,
+      scaleY: scale,
+    });
+    fabricCanvasRef.current.add(addStamper);
+    fabricCanvasRef.current.requestRenderAll();
+  }, [stampList, selectStamp]);
 
   useEffect(() => {
     (async () => {
       const getPdfFiles = await getPdf();
-      if (getPdfFiles.success) setFile(getPdfFiles.data?.file);
+      if (getPdfFiles.success && getPdfFiles.data?.base64 && getPdfFiles.data?.name) {
+        setFile(base64ToFile(getPdfFiles.data?.base64, getPdfFiles.data?.name));
+      }
       const getStamper = await getStamp();
       if (getStamper.success) setStampList(getStamper.data);
     })();
@@ -88,7 +116,14 @@ const PdfStamper = () => {
           <div className="stamps">
             {/* <img src={Stamp1} /> */}
             {stampList.map((v, i) => {
-              return <img key={i} src={v.base64} alt={v.name} />;
+              return (
+                <button
+                  className={`stampItems ${selectStamp === i ? "active" : ""}`}
+                  key={i}
+                  onClick={() => onSelectStamp(i)}>
+                  <img src={v.base64} alt={v.name} />
+                </button>
+              );
             })}
           </div>
         </div>

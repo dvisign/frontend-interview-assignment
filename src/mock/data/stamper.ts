@@ -1,7 +1,7 @@
 import { http, HttpResponse } from "msw";
 import { apiEndpoints } from "@/mock";
 import { fileToBase64 } from "@/utils";
-import { STORAGE_KEY, getStorageData, getStampData } from "@/mock";
+import { STORAGE_KEY, getStorageData, getStampData, STAMP_KEY } from "@/mock";
 
 export default [
   http.get(apiEndpoints("/api/stamps"), () => {
@@ -15,7 +15,7 @@ export default [
     const base64 = await fileToBase64(file);
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify({ ...JSON.parse(getStorageData()), stamp: [...getStampData(), { name, base64 }] }),
+      JSON.stringify({ ...JSON.parse(getStorageData()), [STAMP_KEY]: [...getStampData(), { name, base64 }] }),
     );
     return HttpResponse.json({ name, base64 });
   }),

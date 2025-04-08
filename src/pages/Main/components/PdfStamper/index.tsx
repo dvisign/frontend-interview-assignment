@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 import * as fabric from "fabric";
 import { usePdfStore } from "@/stores/pdfStore";
+import { useStampStore } from "@/stores/stampStore";
 import Button from "@/components/form/Button";
 import FileUploader from "@/components/form/FileUploader";
 import { getStamp, uploadStamp } from "@/services/stamp";
@@ -10,7 +11,8 @@ import { PdfStamperStyles } from "./styles";
 import { PdfStamperPropTypes } from "./types";
 
 const PdfStamper = ({ fabricCanvasRef = { current: null } }: PdfStamperPropTypes) => {
-  const { file, setFile, stampList, setStampList, selectStamp, setSelectStamp } = usePdfStore();
+  const { file, setFile } = usePdfStore();
+  const { stampList, setStampList, selectStamp, setSelectStamp } = useStampStore();
 
   const handlePDFChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

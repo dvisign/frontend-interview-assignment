@@ -33,7 +33,7 @@ const PdfPreview = ({ selectPage = 0, setSelectPage }: PdfPreviewPropTypes) => {
             return (
               <div key={i} className={`previewItmes ${i === selectPage ? "active" : ""}`}>
                 <Button className="image" onClick={() => onChangeDocument(i)}>
-                  <img src={v} />
+                  <img loading="lazy" src={v} />
                 </Button>
                 <div className="imageIndex">{i + 1}</div>
               </div>

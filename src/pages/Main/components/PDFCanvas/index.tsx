@@ -5,7 +5,7 @@ import useRefCallback from "@/hooks/useRefCallback";
 import { PdfCanvasStyles } from "./styles";
 import { PDFCanvasPropTypes } from "./types";
 
-const PDFCanvas = ({ createCanvas = () => null }: PDFCanvasPropTypes) => {
+const PDFCanvas = ({ selectPage, createCanvas = () => null }: PDFCanvasPropTypes) => {
   const { file } = usePdfStore();
   const [canvasRef, canvasRefCreator] = useRefCallback<HTMLCanvasElement>();
 
@@ -14,7 +14,7 @@ const PDFCanvas = ({ createCanvas = () => null }: PDFCanvasPropTypes) => {
   useEffect(() => {
     if (!canvasRef.current) return;
     createCanvas(canvasRef.current);
-  }, [file]);
+  }, [file, selectPage]);
 
   return (
     <PdfCanvasStyles className="B">

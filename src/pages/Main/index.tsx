@@ -49,8 +49,8 @@ const Main = () => {
   return (
     <div>
       <PdfStamper fabricCanvasRef={fabricCanvasRef} />
-      <PdfCanvas createCanvas={createCanvas} />
-      <PdfPreview selectPage={selectPage} setSelectPage={setSelectPage} />
+      <PdfCanvas selectPage={selectPage} createCanvas={createCanvas} />
+      <PdfPreview setSelectPage={setSelectPage} />
     </div>
   );
 };

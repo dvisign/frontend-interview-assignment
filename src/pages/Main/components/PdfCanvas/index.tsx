@@ -16,24 +16,30 @@ const PdfCanvas = ({
 
   const handlePDFDownload = useCallback(async () => {
     if (!fabricCanvasRef.current || !file) return;
+
     const originalBytes = await file.arrayBuffer();
     const originalPdf = await PDFDocument.load(originalBytes);
-
     const newPdf = await PDFDocument.create();
     const totalPages = originalPdf.getPageCount();
 
     for (let i = 0; i < totalPages; i++) {
       if (i === selectPage) {
-        const pngDataUrl = fabricCanvasRef.current.toDataURL();
+        const pngDataUrl = fabricCanvasRef.current.toDataURL({
+          multiplier: 2,
+          format: "png",
+        });
         const imageBytes = await fetch(pngDataUrl).then(res => res.arrayBuffer());
         const pngImage = await newPdf.embedPng(imageBytes);
 
-        const page = newPdf.addPage([pngImage.width, pngImage.height]);
+        const originalPage = await originalPdf.getPage(i);
+        const { width, height } = originalPage.getSize();
+
+        const page = newPdf.addPage([width, height]);
         page.drawImage(pngImage, {
           x: 0,
           y: 0,
-          width: pngImage.width,
-          height: pngImage.height,
+          width,
+          height,
         });
       } else {
         const [copiedPage] = await newPdf.copyPages(originalPdf, [i]);

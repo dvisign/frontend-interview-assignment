@@ -10,7 +10,6 @@ const PdfPreview = ({ selectPage = 0, setSelectPage }: PdfPreviewPropTypes) => {
   const [fileImage, setFileImage] = useState<string[] | null>(null);
 
   const onChangeDocument = useCallback((index: number) => {
-    console.log(index);
     setSelectPage(index);
   }, []);
 

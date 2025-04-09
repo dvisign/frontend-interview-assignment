@@ -30,7 +30,6 @@ const Main = () => {
       (async () => {
         const stamped = stampPageList.find(v => v.index === selectPage);
         const imageSrc = stamped?.base64 ?? (await pdfFileToImage(file, selectPage + 1)).image;
-        console.log("stamped", stamped, stampPageList);
         if (!imageSrc) return;
         const img = await fabric.FabricImage.fromURL(imageSrc);
 

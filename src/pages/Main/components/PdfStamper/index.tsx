@@ -2,6 +2,7 @@ import { useCallback, useEffect } from "react";
 import * as fabric from "fabric";
 import { usePdfStore } from "@/stores/pdfStore";
 import { useStampStore } from "@/stores/stampStore";
+import { usePreviewStore } from "@/stores/previewStore";
 import Button from "@/components/form/Button";
 import FileUploader from "@/components/form/FileUploader";
 import { getStamp, uploadStamp } from "@/services/stamp";
@@ -12,6 +13,7 @@ import { PdfStamperPropTypes } from "./types";
 
 const PdfStamper = ({ fabricCanvasRef = { current: null } }: PdfStamperPropTypes) => {
   const { file, setFile } = usePdfStore();
+  const { selectPage, setStampPageList } = usePreviewStore();
   const { stampList, setStampList, selectStamp, setSelectStamp } = useStampStore();
 
   const handlePDFChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +69,16 @@ const PdfStamper = ({ fabricCanvasRef = { current: null } }: PdfStamperPropTypes
     });
     fabricCanvasRef.current.add(addStamper);
     fabricCanvasRef.current.requestRenderAll();
-  }, [stampList, selectStamp]);
+
+    const stampedBase64 = fabricCanvasRef.current.toDataURL({
+      format: "png",
+      multiplier: 2, // 고해상도 원하면 조절
+    });
+    setStampPageList({
+      index: selectPage,
+      base64: stampedBase64,
+    });
+  }, [stampList, selectStamp, selectPage]);
 
   useEffect(() => {
     (async () => {
@@ -130,7 +141,6 @@ const PdfStamper = ({ fabricCanvasRef = { current: null } }: PdfStamperPropTypes
           </div>
         </div>
       </div>
-
       <div className="bottom">
         <Button type="button" onClick={handleStampDraw}>
           도장 찍기

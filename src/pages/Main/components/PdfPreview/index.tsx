@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
-import Button from "@/components/form/Button";
+import PreviewImage from "../PreviewImage";
 import { usePdfStore } from "@/stores/pdfStore";
+import { usePreviewStore } from "@/stores/previewStore";
 import { loadPdfFromFile, renderAllPagesToImages } from "@/utils";
 import { PdfPreviewStyles } from "./styles";
-import { PdfPreviewPropTypes } from "./types";
 
-const PdfPreview = ({ selectPage = 0, setSelectPage }: PdfPreviewPropTypes) => {
+const PdfPreview = () => {
   const { file } = usePdfStore();
+  const { selectPage, setSelectPage } = usePreviewStore();
   const [fileImage, setFileImage] = useState<string[] | null>(null);
 
   const onChangeDocument = useCallback((index: number) => {
@@ -30,12 +31,13 @@ const PdfPreview = ({ selectPage = 0, setSelectPage }: PdfPreviewPropTypes) => {
         {fileImage &&
           fileImage.map((v, i) => {
             return (
-              <div key={i} className={`previewItmes ${i === selectPage ? "active" : ""}`}>
-                <Button className="image" onClick={() => onChangeDocument(i)}>
-                  <img loading="lazy" src={v} />
-                </Button>
-                <div className="imageIndex">{i + 1}</div>
-              </div>
+              <PreviewImage key={i} active={i === selectPage} index={i} src={v} onChange={onChangeDocument} />
+              // <div key={i} className={`previewItmes ${i === selectPage ? "active" : ""}`}>
+              //   <Button className="image" onClick={() => onChangeDocument(i)}>
+              //     <img loading="lazy" src={v} />
+              //   </Button>
+              //   <div className="imageIndex">{i + 1}</div>
+              // </div>
             );
           })}
       </div>

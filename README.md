@@ -71,19 +71,14 @@ npm run build
 npm run format
 ```
 ---
-# 4. 주요 기능
+# 4. 참고 사항
 
+- 현재는 한 페이지만 도장을 찍을 수 있도록 제한됨
+- Redux DevTools를 통해 상태 확인 가능 (개발 모드 한정)
 - **Zustand 스토어 분리**: 도장의 상태등을 관리하는 store와 PDF 파일을 담당하는 store로 분리
 - **도장 삽입 처리 및 PDF 다운로드**: fabric.js를 통한 위치/크기 지정 후, 다운로드에 다시 이미지를 PDF로 삽입
 - **Mock API 연동**: 실제 API를 대신할 mocking api 구현 및 DB대체로 localstorage 활용
 - **Base64 파일 처리**: 이미지 파일을 canvas로 핸들링 하기위해 base64로 처리
-----
-
-# 5. 참고 사항
-
-- 현재는 한 페이지만 도장을 찍을 수 있도록 제한됨
-- Redux DevTools를 통해 상태 확인 가능 (개발 모드 한정)
-
 ---
 
 # 6. 향후 개선 방향
